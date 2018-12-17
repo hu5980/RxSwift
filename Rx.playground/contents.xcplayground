@@ -12,7 +12,11 @@
         <page name='Connectable_Operators'/>
         <page name='Error_Handling_Operators'/>
         <page name='Debugging_Operators'/>
-        <page name='Enable_RxSwift.resourceCount'/>
         <page name='Playground'/>
+        <page name='Enable_RxSwift.Resources.total'/>
+        <page name='12-15 2-1'/>
+        <page name='12-15 2-2'/>
+        <page name='12-17 3-1'/>
+        <page name='12-17 4-1'/>
     </pages>
 </playground>
