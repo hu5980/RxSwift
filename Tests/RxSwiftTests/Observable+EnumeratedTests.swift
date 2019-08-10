@@ -19,9 +19,9 @@ extension ObservableEnumeratedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, "a"),
-            next(220, "b"),
-            next(280, "c")
+            .next(210, "a"),
+            .next(220, "b"),
+            .next(280, "c")
             ])
 
         let res = scheduler.start {
@@ -29,9 +29,9 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (index: 0, element: "a")),
-            next(220, (index: 1, element: "b")),
-            next(280, (index: 2, element: "c"))
+            .next(210, (index: 0, element: "a")),
+            .next(220, (index: 1, element: "b")),
+            .next(280, (index: 2, element: "c"))
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
@@ -43,10 +43,10 @@ extension ObservableEnumeratedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, "a"),
-            next(220, "b"),
-            next(280, "c"),
-            completed(300)
+            .next(210, "a"),
+            .next(220, "b"),
+            .next(280, "c"),
+            .completed(300)
             ])
 
         let res = scheduler.start {
@@ -54,10 +54,10 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (index: 0, element: "a")),
-            next(220, (index: 1, element: "b")),
-            next(280, (index: 2, element: "c")),
-            completed(300)
+            .next(210, (index: 0, element: "a")),
+            .next(220, (index: 1, element: "b")),
+            .next(280, (index: 2, element: "c")),
+            .completed(300)
         ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
@@ -69,10 +69,10 @@ extension ObservableEnumeratedTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let xs = scheduler.createHotObservable([
-            next(210, "a"),
-            next(220, "b"),
-            next(280, "c"),
-            error(300, testError)
+            .next(210, "a"),
+            .next(220, "b"),
+            .next(280, "c"),
+            .error(300, testError)
             ])
 
         let res = scheduler.start {
@@ -80,10 +80,10 @@ extension ObservableEnumeratedTest {
         }
 
         XCTAssertArraysEqual(res.events, [
-            next(210, (index: 0, element: "a")),
-            next(220, (index: 1, element: "b")),
-            next(280, (index: 2, element: "c")),
-            error(300, testError)
+            .next(210, (index: 0, element: "a")),
+            .next(220, (index: 1, element: "b")),
+            .next(280, (index: 2, element: "c")),
+            .error(300, testError)
             ] as [Recorded<Event<(index: Int, element: String)>>], compareRecordedEvents)
 
         XCTAssertEqual(xs.subscriptions, [
@@ -102,14 +102,14 @@ extension ObservableEnumeratedTest {
     #endif
 }
 
-fileprivate func compareRecordedEvents(lhs: Recorded<Event<(index: Int, element: String)>>, rhs: Recorded<Event<(index: Int, element: String)>>) -> Bool {
+private func compareRecordedEvents(lhs: Recorded<Event<(index: Int, element: String)>>, rhs: Recorded<Event<(index: Int, element: String)>>) -> Bool {
     return lhs.time == rhs.time && { (lhs: Event<(index: Int, element: String)>, rhs: Event<(index: Int, element: String)>) in
         switch (lhs, rhs) {
-        case (.next(let lhs), .next(let rhs)):
+        case let (.next(lhs), .next(rhs)):
             return lhs == rhs
         case (.next, _):
             return false
-        case (.error(let lhs), .error(let rhs)):
+        case let (.error(lhs), .error(rhs)):
             return Event<Int>.error(lhs) == Event<Int>.error(rhs)
         case (.error, _):
             return false

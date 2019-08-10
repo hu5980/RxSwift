@@ -16,7 +16,7 @@ import XCTest
 
 final class UIWebViewTests: RxTest {}
 
-fileprivate let testHTMLString = "<html><head></head><body><h1>🔥</h1></body></html>"
+private let testHTMLString = "<html><head></head><body><h1>🔥</h1></body></html>"
     
 extension UIWebViewTests {
         
@@ -24,7 +24,7 @@ extension UIWebViewTests {
         let webView = UIWebView()
         var didStartLoad = false
 
-        let subscription = webView.rx.didStartLoad.subscribe(onNext: {
+        let subscription = webView.rx.didStartLoad.subscribe(onNext: { _ in
             didStartLoad = true
         })
 
@@ -38,7 +38,7 @@ extension UIWebViewTests {
         let webView = UIWebView()
         var didFinishLoad = false
 
-        let subscription = webView.rx.didFinishLoad.subscribe(onNext: {
+        let subscription = webView.rx.didFinishLoad.subscribe(onNext: { _ in
             didFinishLoad = true
         })
 
